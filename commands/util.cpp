@@ -53,3 +53,12 @@ std::string concat_str(const std::vector<std::string>& v, const std::string& sep
     }
     return result;
 }
+
+std::string getOsName()
+{
+    #ifdef _WIN32 || _WIN64
+    return "Windows";
+    #else
+    return "Other";
+    #endif
+}

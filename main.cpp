@@ -6,6 +6,7 @@
 
 #include "commands/ls.h"
 #include "commands/pwd.h"
+#include "commands/util.h"
 
 enum CommandCode {
     ls_c,
@@ -16,6 +17,7 @@ enum CommandCode {
     cp_c,
     rm_c,
     echo_c,
+    clear_c,
     exit_c,
     info_c,
     default_c,
@@ -30,6 +32,7 @@ CommandCode hash (const std::string& commandString) {
     if (commandString == "cp") return cp_c;
     if (commandString == "rm") return rm_c;
     if (commandString == "echo") return echo_c;
+    if (commandString == "clear") return clear_c;
     if (commandString == "exit") return exit_c;
     if (commandString == "info") return info_c;
     else return default_c;
@@ -89,6 +92,13 @@ int main(int argc, char* argv[])
                     print_dir(filepath);
                     std::cout << std::endl;
                     break;
+                case clear_c:
+                    if (getOsName() == "Windows") {
+                        system("cls");
+                    } else {
+                        std::cout << "\033[2J";
+                    }
+                break;
                 case exit_c:
                     std::cout << "System Exiting..." << std::endl;
                     running = false;
