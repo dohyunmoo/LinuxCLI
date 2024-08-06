@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #include "commands/ls.h"
+#include "commands/pwd.h"
 
 enum CommandCode {
     ls_c,
@@ -34,54 +35,81 @@ CommandCode hash (const std::string& commandString) {
     else return default_c;
 }
 
-int main()
+void print_dir(const std::vector<std::string>& filepath) {
+    for (size_t i = 0; i < filepath.size(); i++) {
+        if (i == 0) {
+            std::cout << filepath[i];
+        } else {
+            std::cout << '/' << filepath[i];
+        }
+    }
+}
+
+int main(int argc, char* argv[])
 {
-    while (1)
+    std::vector<std::string> filepath = pwd_command();
+    std::string user = argc > 1 ? argv[1] : "root";
+
+    bool running = true;
+    while (running)
     {
         std::string command;
         std::vector<std::string> args;
 
+        std::cout << user << '@' << "dohyunmoo -> ";
+        print_dir(filepath);
         std::cout << "$ ";
+
         std::getline(std::cin, command);
 
-        std::istringstream iss(command);
-        std::string token;
+        if (!command.empty()) {
+            std::istringstream iss(command);
+            std::string token;
 
-        while (iss >> token) {
-            args.push_back(token);
-        }
-
-        CommandCode code = hash(args[0]);
-
-        try {
-            switch (code)
-            {
-            case ls_c:
-                if (args.size() > 2) {
-                    // std::string errmsg = std::format("too many arguments for command {}", args[0]);
-                    std::string errmsg = "too many arguments for command ls";
-                    throw std::invalid_argument(errmsg);
-                }
-                ls_command(args.size() > 1 ? args[1] : ".");
-                break;
-            case pwd_c:
-                break;
-            case exit_c:
-                std::cout << "System Exiting..." << std::endl;
-                return 0;
-            case info_c:
-                std::cout << "developed by dohyunmoo @ https://github.com/dohyunmoo/LinuxCLI with C++" << __cplusplus << std::endl;
-                break;
-            case default_c:
-                std::cout << "invalid command input" << std::endl;
-                break;
-            default:
-                std::cout << "To be implemented" << std::endl;
-                break;
+            while (iss >> token) {
+                args.push_back(token);
             }
 
-        } catch (const std::invalid_argument& e) {
-            std::cout << e.what() << std::endl;
+            CommandCode code = hash(args[0]);
+
+            try {
+                switch (code)
+                {
+                case ls_c:
+                    if (args.size() > 2) {
+                        std::string errmsg = "Too many arguments for command ls";
+                        throw std::invalid_argument(errmsg);
+                    } else if (args.size() > 1) {
+                        ls_command(filepath, args[1]);
+                    } else {
+                        ls_command(filepath);
+                    }
+                    break;
+                case pwd_c:
+                    print_dir(filepath);
+                    std::cout << std::endl;
+                    break;
+                case exit_c:
+                    std::cout << "System Exiting..." << std::endl;
+                    running = false;
+                    break;
+                case info_c:
+                    std::cout << "developed by dohyunmoo @ https://github.com/dohyunmoo/LinuxCLI with C++" << __cplusplus << std::endl;
+                    break;
+                case default_c:
+                    std::cout << "invalid command input" << std::endl;
+                    break;
+                default:
+                    std::cout << "To be implemented" << std::endl;
+                    break;
+                }
+
+            } catch (const std::invalid_argument& e) {
+                std::cout << e.what() << std::endl;
+            }
         }
     }
+
+    std::cout << "developed by dohyunmoo @ https://github.com/dohyunmoo/LinuxCLI with C++" << __cplusplus << std::endl;
+    return 0;
 }
