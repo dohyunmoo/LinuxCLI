@@ -92,11 +92,24 @@ int main(int argc, char* argv[])
                     print_dir(filepath);
                     std::cout << std::endl;
                     break;
-                case clear_c:
-                    if (getOsName() == "Windows") {
-                        system("cls");
+                case echo_c:
+                    if (args.size() != 2) {
+                        std::string errmsg = "Invalid number of arguments for command echo";
+                        throw std::invalid_argument(errmsg);
                     } else {
-                        std::cout << "\033[2J";
+                        std::cout << args[1] << std::endl;
+                    }
+                    break;
+                case clear_c:
+                    if (args.size() > 1) {
+                        std::string errmsg = "Invalid number of arguments for command clear";
+                        throw std::invalid_argument(errmsg);
+                    } else {
+                        if (getOsName() == "Windows") {
+                            system("cls");
+                        } else {
+                            std::cout << "\033[2J";
+                        }
                     }
                 break;
                 case exit_c:
