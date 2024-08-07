@@ -7,6 +7,7 @@
 #include "commands/ls.h"
 #include "commands/pwd.h"
 #include "commands/util.h"
+#include "commands/cd.h"
 
 enum CommandCode {
     ls_c,
@@ -91,6 +92,18 @@ int main(int argc, char* argv[])
                 case pwd_c:
                     print_dir(filepath);
                     std::cout << std::endl;
+                    break;
+                case cd_c:
+                    if (args.size() > 2) {
+                        std::string errmsg = "Invalid number of arguments for command echo";
+                        throw std::invalid_argument(errmsg);
+                    } else if (args.size() == 2) {
+                        std::vector<std::string> temp = cd_command(filepath, args[1]);
+                        filepath.clear();
+                        for (std::string temp_f : temp) {
+                            filepath.push_back(temp_f);
+                        }
+                    }
                     break;
                 case echo_c:
                     if (args.size() != 2) {

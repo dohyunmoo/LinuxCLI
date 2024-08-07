@@ -13,10 +13,9 @@ void ls_command (const std::vector<std::string>& path) {
 
     try {
         for (const auto& entry : fs::directory_iterator(path_str)) {
-            std::string path_string = entry.path().generic_string();
-            std::cout << path_string << std::endl;
+            std::cout << entry.path().generic_string() << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {
         std::cerr << "Error accessing directory: " << e.what() << std::endl;
     }
 }
@@ -27,10 +26,9 @@ void ls_command (const std::vector<std::string>& path, const std::string& move_p
         std::string final_path_str = concat_str(final_path, "/");
 
         for (const auto& entry : fs::directory_iterator(final_path_str)) {
-            std::string path_string = entry.path().generic_string();
-            std::cout << path_string << std::endl;
+            std::cout << entry.path().generic_string() << std::endl;
         }
-    } catch (const std::filesystem::filesystem_error& e) {
+    } catch (const fs::filesystem_error& e) {
         std::cerr << "Error accessing directory: " << e.what() << std::endl;
     } catch (const std::invalid_argument& e) {
         std::cerr << e.what() << std::endl;
