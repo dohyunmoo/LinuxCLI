@@ -11,7 +11,7 @@ CLIProgram.exe
 
 - [x] ls
 - [x] pwd
-- [ ] cd
+- [x] cd
 - [ ] mkdir
 - [ ] mv
 - [ ] cp
