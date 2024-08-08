@@ -8,23 +8,9 @@
 #include "commands/pwd.h"
 #include "commands/cd.h"
 #include "commands/mkdir.h"
+#include "commands/cp.h"
 
 #include "commands/util.h"
-
-enum CommandCode {
-    ls_c,
-    pwd_c,
-    cd_c,
-    mkdir_c,
-    mv_c,
-    cp_c,
-    rm_c,
-    echo_c,
-    clear_c,
-    exit_c,
-    info_c,
-    default_c,
-};
 
 CommandCode hash (const std::string& commandString) {
     if (commandString == "ls") return ls_c;
@@ -115,6 +101,16 @@ int main(int argc, char* argv[])
                         mkdir_p_command(filepath, args[2]);
                     } else {
                         mkdir_command(filepath, args[1]);
+                    }
+                    break;
+                case cp_c:
+                    if (args.size() > 4 || args.size() < 3) {
+                        std::string errmsg = "Invalid number of arguments for command cp";
+                        throw std::invalid_argument(errmsg);
+                    } else if (args.size() == 4 && args[1] == "-r") {
+                        cp_r_command(filepath, args[2], args[3]);
+                    } else {
+                        cp_command(filepath, args[1], args[2]);
                     }
                     break;
                 case echo_c:

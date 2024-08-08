@@ -3,6 +3,8 @@
 #include <vector>
 #include <stdexcept>
 
+#include "util.h"
+
 std::vector<std::string> split_dir(const std::string& s, const std::string& d) {
     std::vector<std::string> tokens;
     size_t start = 0, end = 0;
@@ -61,4 +63,34 @@ std::string getOsName()
     #else
     return "Other";
     #endif
+}
+
+void helper(CommandCode code) {
+    switch(code)
+    {
+        case ls_c:
+            break;
+        case pwd_c:
+            break;
+        case cd_c:
+            break;
+        case mkdir_c:
+            break;
+        case mv_c:
+            break;
+        case cp_c:
+            break;
+        case rm_c:
+            break;
+        case echo_c:
+            break;
+        case clear_c:
+            break;
+        case exit_c:
+            break;
+        case info_c:
+            break;
+        case default_c:
+            break;
+    }
 }
