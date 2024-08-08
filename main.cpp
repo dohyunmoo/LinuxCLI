@@ -6,8 +6,10 @@
 
 #include "commands/ls.h"
 #include "commands/pwd.h"
-#include "commands/util.h"
 #include "commands/cd.h"
+#include "commands/mkdir.h"
+
+#include "commands/util.h"
 
 enum CommandCode {
     ls_c,
@@ -95,7 +97,7 @@ int main(int argc, char* argv[])
                     break;
                 case cd_c:
                     if (args.size() > 2) {
-                        std::string errmsg = "Invalid number of arguments for command echo";
+                        std::string errmsg = "Invalid number of arguments for command cd";
                         throw std::invalid_argument(errmsg);
                     } else if (args.size() == 2) {
                         std::vector<std::string> temp = cd_command(filepath, args[1]);
@@ -103,6 +105,16 @@ int main(int argc, char* argv[])
                         for (std::string temp_f : temp) {
                             filepath.push_back(temp_f);
                         }
+                    }
+                    break;
+                case mkdir_c:
+                    if (args.size() > 3 || args.size() < 2) {
+                        std::string errmsg = "Invalid number of arguments for command mkdir";
+                        throw std::invalid_argument(errmsg);
+                    } else if (args.size() == 3 && args[1] == "-p") {
+                        mkdir_p_command(filepath, args[2]);
+                    } else {
+                        mkdir_command(filepath, args[1]);
                     }
                     break;
                 case echo_c:
@@ -139,7 +151,6 @@ int main(int argc, char* argv[])
                     std::cout << "To be implemented" << std::endl;
                     break;
                 }
-
             } catch (const std::invalid_argument& e) {
                 std::cout << e.what() << std::endl;
             }
