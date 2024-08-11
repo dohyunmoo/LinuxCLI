@@ -9,6 +9,7 @@
 #include "commands/cd.h"
 #include "commands/mkdir.h"
 #include "commands/cp.h"
+#include "commands/rm.h"
 
 #include "commands/util.h"
 
@@ -111,6 +112,16 @@ int main(int argc, char* argv[])
                         cp_r_command(filepath, args[2], args[3]);
                     } else {
                         cp_command(filepath, args[1], args[2]);
+                    }
+                    break;
+                case rm_c:
+                    if (args.size() > 3 || args.size() < 2) {
+                        std::string errmsg = "Invalid number of arguments for command rm";
+                        throw std::invalid_argument(errmsg);
+                    } else if (args.size() == 3 && (args[1] == "-r" || args[1] == "-rf")) {
+                        rm_r_command(filepath, args[2]);
+                    } else {
+                        rm_command(filepath, args[1]);
                     }
                     break;
                 case echo_c:
