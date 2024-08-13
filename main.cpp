@@ -43,6 +43,14 @@ int main(int argc, char* argv[])
     std::vector<std::string> filepath = pwd_command();
     std::string user = argc > 1 ? argv[1] : "root";
 
+    std::cout << "##############################" << std::endl;
+    std::cout << "###                        ###" << std::endl;
+    std::cout << "###  Welcome to Linux CLI  ###" << std::endl;
+    std::cout << "###                        ###" << std::endl;
+    std::cout << "##############################" << std::endl;
+    std::cout << "\n" << "Running as ";
+    std::cout << user << std::endl;
+
     bool running = true;
     while (running)
     {
