@@ -12,10 +12,9 @@ CLIProgram.exe
 - [x] ls
 - [x] pwd
 - [x] cd
-- [ ] mkdir
-- [ ] mv
-- [ ] cp
-- [ ] rm
+- [x] mkdir
+- [x] cp
+- [x] rm
 - [x] echo
 - [x] clear
 - [x] exit (software exit command)
