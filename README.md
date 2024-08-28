@@ -1,5 +1,5 @@
 # LinuxCLI
-Linux CLI on Windows with C++17
+Mock Linux CLI with some file management commands on Windows with C++17
 
 ```
 cd LinuxCLI
